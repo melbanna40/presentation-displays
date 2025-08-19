@@ -30,7 +30,7 @@ void secondaryDisplayMain() {
 }
 
 class MySecondApp extends StatelessWidget {
-  const MySecondApp({Key? key}) : super(key: key);
+  const MySecondApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class MySecondApp extends StatelessWidget {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +57,7 @@ class Button extends StatelessWidget {
   final String title;
   final VoidCallback? onPressed;
 
-  const Button({Key? key, required this.title, this.onPressed})
-      : super(key: key);
+  const Button({super.key, required this.title, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +76,7 @@ class Button extends StatelessWidget {
 
 /// Main Screen
 class DisplayManagerScreen extends StatefulWidget {
-  const DisplayManagerScreen({Key? key}) : super(key: key);
+  const DisplayManagerScreen({super.key});
 
   @override
   _DisplayManagerScreenState createState() => _DisplayManagerScreenState();
@@ -328,7 +327,7 @@ class _DisplayManagerScreenState extends State<DisplayManagerScreen> {
 
 /// UI of Presentation display
 class SecondaryScreen extends StatefulWidget {
-  const SecondaryScreen({Key? key}) : super(key: key);
+  const SecondaryScreen({super.key});
 
   @override
   _SecondaryScreenState createState() => _SecondaryScreenState();

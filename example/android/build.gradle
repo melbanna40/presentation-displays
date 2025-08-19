@@ -1,31 +1,42 @@
-buildscript {
-    ext.kotlin_version = '1.7.20'
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:7.4.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
-}
-
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
+
+    subprojects {
+        afterEvaluate { project ->
+            def androidExt = project.extensions.findByType(com.android.build.gradle.BaseExtension)
+            if (androidExt != null) {
+                if (androidExt.namespace == null) {
+                    androidExt.namespace = project.group.toString()
+                }
+
+//                androidExt.compileOptions {
+//                    sourceCompatibility JavaVersion.VERSION_21
+//                    targetCompatibility JavaVersion.VERSION_21
+//                }
+            }
+
+            tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+                kotlinOptions {
+                    jvmTarget = "21"
+                }
+            }
+        }
+    }
 }
 
-rootProject.buildDir = '../build'
+rootProject.layout.buildDirectory.set(file("../build"))
+
 subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    layout.buildDirectory.set(rootProject.layout.buildDirectory.dir(name))
 }
+
 subprojects {
-    project.evaluationDependsOn(':app')
+    evaluationDependsOn(":app")
 }
 
 tasks.register("clean", Delete) {
-    delete rootProject.buildDir
+    delete rootProject.layout.buildDirectory
 }
